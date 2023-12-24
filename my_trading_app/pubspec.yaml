@@ -1,0 +1,25 @@
+name: my_trading_app
+description: A new Flutter project.
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.12.0 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  image_picker: ^0.8.4+2
+  webview_flutter: ^2.0.13
+  url_launcher: ^6.0.13
+  youtube_player_flutter: ^8.0.0
+  cupertino_icons: ^1.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
