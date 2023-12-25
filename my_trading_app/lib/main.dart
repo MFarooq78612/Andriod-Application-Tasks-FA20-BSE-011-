@@ -1,7 +1,8 @@
-import 'dart:io' show Platform;
+import 'dart:io' show File, Platform;
 
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 void main() {
   runApp(MyApp());
@@ -25,9 +26,15 @@ class _AdminPostScreenState extends State<AdminPostScreen> {
   String videoURL = '';
   String imageURL = '';
 
-  Future<void> _pickImage() async {
-    // Code to pick an image from the gallery
-    // ...
+  Future<void> _pickImageFromGallery() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        imageURL = pickedFile.path!;
+      });
+    }
   }
 
   @override
@@ -42,8 +49,8 @@ class _AdminPostScreenState extends State<AdminPostScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             ElevatedButton(
-              onPressed: _pickImage,
-              child: Text('Select Image'),
+              onPressed: _pickImageFromGallery,
+              child: Text('Select Image from Gallery'),
             ),
             SizedBox(height: 20),
             TextField(
@@ -53,15 +60,13 @@ class _AdminPostScreenState extends State<AdminPostScreen> {
               onChanged: (value) {
                 setState(() {
                   videoURL = value;
-                  imageURL = '';
                 });
               },
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () async {
+              onPressed: () {
                 if (Platform.isWindows) {
-                  // Handling video playback for Windows platform
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
@@ -80,27 +85,104 @@ class _AdminPostScreenState extends State<AdminPostScreen> {
                     },
                   );
                 } else {
-                  // For other platforms, launch the video URL in the default browser
-                  if (await canLaunch(videoURL)) {
-                    await launch(videoURL);
-                  } else {
-                    throw 'Could not launch $videoURL';
-                  }
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => VideoDisplayPage(videoURL: videoURL),
+                    ),
+                  );
                 }
               },
               child: Text('Show Video in App'),
             ),
             SizedBox(height: 20),
             imageURL.isNotEmpty
-                ? Image.file(
-              File(imageURL),
-              height: 200,
-              fit: BoxFit.cover,
+                ? GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ImageViewerPage(imageFile: File(imageURL)),
+                  ),
+                );
+              },
+              child: Image.file(
+                File(imageURL),
+                height: 200,
+                fit: BoxFit.cover,
+              ),
             )
                 : Container(),
           ],
         ),
       ),
     );
+  }
+}
+
+class ImageViewerPage extends StatelessWidget {
+  final File imageFile;
+
+  const ImageViewerPage({Key? key, required this.imageFile}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Image Viewer'),
+      ),
+      body: Center(
+        child: Image.file(
+          imageFile,
+        ),
+      ),
+    );
+  }
+}
+
+class VideoDisplayPage extends StatefulWidget {
+  final String videoURL;
+
+  const VideoDisplayPage({Key? key, required this.videoURL}) : super(key: key);
+
+  @override
+  _VideoDisplayPageState createState() => _VideoDisplayPageState();
+}
+
+class _VideoDisplayPageState extends State<VideoDisplayPage> {
+  late YoutubePlayerController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = YoutubePlayerController(
+      initialVideoId: YoutubePlayer.convertUrlToId(widget.videoURL)!,
+      flags: YoutubePlayerFlags(
+        autoPlay: true,
+        mute: false,
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Video Display'),
+      ),
+      body: Center(
+        child: YoutubePlayer(
+          controller: _controller,
+          showVideoProgressIndicator: true,
+          progressIndicatorColor: Colors.blueAccent,
+        ),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }
