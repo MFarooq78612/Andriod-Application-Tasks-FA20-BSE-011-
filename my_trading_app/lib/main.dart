@@ -3,7 +3,6 @@ import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:http/http.dart' as http;
 import 'package:file_picker/file_picker.dart';
 
@@ -59,9 +58,8 @@ class WelcomePage extends StatelessWidget {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  shape: CircleBorder(),
-                  padding: EdgeInsets.all(20), // Increased button size
-                  primary: Colors.pink, // Pink button color
+                  shape: CircleBorder(), backgroundColor: Colors.pink,
+                  padding: EdgeInsets.all(20), // Pink button color
                 ),
                 child: Icon(
                   Icons.arrow_forward,
@@ -227,7 +225,7 @@ class UsersPage extends StatelessWidget {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.pink, // Button color set to pink
+                  backgroundColor: Colors.pink, // Button color set to pink
                 ),
                 child: Text(
                   'Access Without Account',
@@ -436,31 +434,124 @@ class _AccessWithoutAccountPageState extends State<AccessWithoutAccountPage> {
   }
 }
 
-class AccessWithAccountPage extends StatelessWidget {
+
+class AccessWithAccountPage extends StatefulWidget {
+  @override
+  _AccessWithAccountPageState createState() => _AccessWithAccountPageState();
+}
+
+class _AccessWithAccountPageState extends State<AccessWithAccountPage> {
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final FocusNode _usernameFocus = FocusNode();
+  final FocusNode _passwordFocus = FocusNode();
+
+  bool isUsernameFocused = false;
+  bool isPasswordFocused = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _usernameController.addListener(updateBorderColor);
+    _passwordController.addListener(updateBorderColor);
+  }
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+    _usernameFocus.dispose();
+    _passwordFocus.dispose();
+    super.dispose();
+  }
+
+  void updateBorderColor() {
+    setState(() {
+      isUsernameFocused = _usernameFocus.hasFocus || _usernameController.text.isNotEmpty;
+      isPasswordFocused = _passwordFocus.hasFocus || _passwordController.text.isNotEmpty;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.pink,
-        title: Text('Access With Account'),
+        title: Text('Login'),
         centerTitle: true,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
       ),
       body: Container(
         color: Colors.black87,
-        child: Center(
-          child: Text(
-            'Access With Account Page',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
+        child: Padding(
+          padding: EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              TextFormField(
+                controller: _usernameController,
+                focusNode: _usernameFocus,
+                style: TextStyle(color: isUsernameFocused ? Colors.white : Colors.pink),
+                decoration: InputDecoration(
+                  labelText: 'Username or Email',
+                  labelStyle: TextStyle(color: Colors.white),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.pink),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: isUsernameFocused ? Colors.pink : Colors.black,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
+              TextFormField(
+                controller: _passwordController,
+                focusNode: _passwordFocus,
+                obscureText: true,
+                style: TextStyle(color: isPasswordFocused ? Colors.white : Colors.pink),
+                decoration: InputDecoration(
+                  labelText: 'Password',
+                  labelStyle: TextStyle(color: Colors.white),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.pink),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: isPasswordFocused ? Colors.pink : Colors.black,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => UserMainPage()),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.pink,
+                  padding: EdgeInsets.symmetric(vertical: 16),
+                ),
+                child: Text('Login', style: TextStyle(fontSize: 18)),
+              ),
+              SizedBox(height: 10),
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SignupPage()),
+                  );
+                },
+                child: Text(
+                  'Don\'t have an account? Sign up',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -469,6 +560,270 @@ class AccessWithAccountPage extends StatelessWidget {
 }
 
 
+
+class UserMainPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.pink,
+        title: Text('User Main Page'),
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          color: Colors.black87,
+          padding: EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              buildCardRow([
+                CardButton(
+                  buttonText: 'Track Real-time Price',
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => CoinMarketPage()));
+                  },
+                ),
+                CardButton(
+                  buttonText: 'Access News by Admin',
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => PostPage()));
+                  },
+                ),
+              ]),
+              SizedBox(height: 20),
+              buildCardRow([
+                CardButton(
+                  buttonText: 'View Video in App',
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => PostPage()));
+                  },
+                ),
+                CardButton(
+                  buttonText: 'Download Admin File',
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => ShareFilePage()));
+                  },
+                ),
+              ]),
+              SizedBox(height: 20),
+              buildCardRow([
+                CardButton(
+                  buttonText: 'Share Shared Picture',
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => ShareFilePage()));
+                  },
+                ),
+                CardButton(
+                  buttonText: 'Like the Admin Post',
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => PostPage()));
+                  },
+                ),
+              ]),
+              SizedBox(height: 20),
+              buildCardRow([
+                CardButton(
+                  buttonText: 'Dislike the Admin Post',
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => PostPage()));
+                  },
+                ),
+                CardButton(
+                  buttonText: 'Give Feedback',
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => PostPage()));
+                  },
+                ),
+              ]),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildCardRow(List<Widget> children) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: children,
+    );
+  }
+}
+
+class CardButton extends StatelessWidget {
+  final String buttonText;
+  final Function onPressed;
+
+  const CardButton({
+    required this.buttonText,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: Colors.pink,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15.0),
+      ),
+      child: InkWell(
+        onTap: () {
+          onPressed();
+        },
+        borderRadius: BorderRadius.circular(15.0),
+        child: Container(
+          height: 150, // Adjust the height of the cards
+          width: MediaQuery.of(context).size.width * 0.3, // Adjust the width of the cards
+          padding: EdgeInsets.all(16),
+          child: Center(
+            child: Text(
+              buttonText,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class SignupPage extends StatefulWidget {
+  @override
+  _SignupPageState createState() => _SignupPageState();
+}
+
+class _SignupPageState extends State<SignupPage> {
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final FocusNode _usernameFocus = FocusNode();
+  final FocusNode _emailFocus = FocusNode();
+  final FocusNode _passwordFocus = FocusNode();
+
+  bool isUsernameFocused = false;
+  bool isEmailFocused = false;
+  bool isPasswordFocused = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _usernameController.addListener(updateBorderColor);
+    _emailController.addListener(updateBorderColor);
+    _passwordController.addListener(updateBorderColor);
+  }
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _usernameFocus.dispose();
+    _emailFocus.dispose();
+    _passwordFocus.dispose();
+    super.dispose();
+  }
+
+  void updateBorderColor() {
+    setState(() {
+      isUsernameFocused = _usernameFocus.hasFocus || _usernameController.text.isNotEmpty;
+      isEmailFocused = _emailFocus.hasFocus || _emailController.text.isNotEmpty;
+      isPasswordFocused = _passwordFocus.hasFocus || _passwordController.text.isNotEmpty;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.pink,
+        title: Text('Sign Up'),
+        centerTitle: true,
+      ),
+      body: Container(
+        color: Colors.black87,
+        child: Padding(
+          padding: EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              TextFormField(
+                controller: _usernameController,
+                focusNode: _usernameFocus,
+                style: TextStyle(color: isUsernameFocused ? Colors.white : Colors.black),
+                decoration: InputDecoration(
+                  labelText: 'Username',
+                  labelStyle: TextStyle(color: Colors.white),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.pink),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: isUsernameFocused ? Colors.pink : Colors.black,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
+              TextFormField(
+                controller: _emailController,
+                focusNode: _emailFocus,
+                style: TextStyle(color: isEmailFocused ? Colors.white : Colors.black),
+                decoration: InputDecoration(
+                  labelText: 'Email',
+                  labelStyle: TextStyle(color: Colors.white),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.pink),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: isEmailFocused ? Colors.pink : Colors.black,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
+              TextFormField(
+                controller: _passwordController,
+                focusNode: _passwordFocus,
+                obscureText: true,
+                style: TextStyle(color: isPasswordFocused ? Colors.white : Colors.black),
+                decoration: InputDecoration(
+                  labelText: 'Password',
+                  labelStyle: TextStyle(color: Colors.white),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.pink),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: isPasswordFocused ? Colors.pink : Colors.black,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.pink,
+                  padding: EdgeInsets.symmetric(vertical: 16),
+                ),
+                child: Text('Sign Up', style: TextStyle(fontSize: 18)),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
 
 
 class TradingAppPage extends StatelessWidget {
