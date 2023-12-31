@@ -938,7 +938,6 @@ class CardItem extends StatelessWidget {
 }
 
 
-
 class AdminVoiceMessagePage extends StatefulWidget {
   @override
   _AdminVoiceMessagePageState createState() => _AdminVoiceMessagePageState();
@@ -1038,20 +1037,30 @@ class _AdminVoiceMessagePageState extends State<AdminVoiceMessagePage> {
               if (!_isRecording)
                 ElevatedButton(
                   onPressed: _startRecording,
-                  child: Text(
-                    'Start Recording',
-                    style: TextStyle(fontSize: 18),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16, horizontal: 32), // Adjust padding for larger button
+                    child: Text(
+                      'Start Recording',
+                      style: TextStyle(fontSize: 18),
+                    ),
                   ),
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.pink),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.pink,
+                  ),
                 )
               else
                 ElevatedButton(
                   onPressed: _stopRecording,
-                  child: Text(
-                    'Stop Recording',
-                    style: TextStyle(fontSize: 18),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16, horizontal: 32), // Adjust padding for larger button
+                    child: Text(
+                      'Stop Recording',
+                      style: TextStyle(fontSize: 18),
+                    ),
                   ),
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.red), // Use a different color for stop
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red, // Use a different color for stop
+                  ),
                 ),
             ],
           ),
@@ -1060,7 +1069,6 @@ class _AdminVoiceMessagePageState extends State<AdminVoiceMessagePage> {
     );
   }
 }
-
 
 
 class ShareFilePage extends StatefulWidget {
