@@ -567,7 +567,7 @@ class UserMainPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.pink,
-        title: Text('User Main Page'),
+        title: Text('User Details Page'),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
