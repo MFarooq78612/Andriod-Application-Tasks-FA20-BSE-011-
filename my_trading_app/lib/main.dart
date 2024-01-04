@@ -1158,7 +1158,7 @@ class _ShareFilePageState extends State<ShareFilePage> {
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _openFileUrl,
-                child: Text('Search URL File'),
+                child: Text('Search here URL File'),
                 style: ElevatedButton.styleFrom(
                   primary: Colors.pink,
                 ),
@@ -1198,7 +1198,7 @@ class _CoinMarketPageState extends State<CoinMarketPage> {
         dollarRate = rate;
       });
     } else {
-      throw Exception('Failed to load data');
+      throw Exception('Failed loading data');
     }
   }
 
@@ -1317,7 +1317,7 @@ class _PostPageState extends State<PostPage> {
                   });
                 },
                 value: selectedOption,
-                hint: const Text('Select Post Type', style: TextStyle(color: Colors.white)),
+                hint: const Text('Select Post Type:', style: TextStyle(color: Colors.white)),
                 underline: Container(),
               ),
             ),
