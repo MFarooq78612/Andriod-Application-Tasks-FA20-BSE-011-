@@ -1207,7 +1207,10 @@ class _CoinMarketPageState extends State<CoinMarketPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.pink,
-        title: const Text('Coin Market'),
+        title: Text(
+          'Coin Market',
+          style: TextStyle(fontSize: 24), // Increase font size here
+        ),
         centerTitle: true,
       ),
       body: Container(
@@ -1265,7 +1268,6 @@ class _CoinMarketPageState extends State<CoinMarketPage> {
     );
   }
 }
-
 class PostPage extends StatefulWidget {
   @override
   _PostPageState createState() => _PostPageState();
