@@ -75,7 +75,6 @@ class WelcomePage extends StatelessWidget {
   }
 }
 
-
 class ChoicesPage extends StatelessWidget {
   const ChoicesPage({Key? key}) : super(key: key);
 
@@ -91,8 +90,6 @@ class ChoicesPage extends StatelessWidget {
           },
         ),
         title: const Center(child: Text('Trading App')),
-        actions: [
-        ],
       ),
       body: Container(
         color: Colors.black87, // Background color set to black87
@@ -111,10 +108,10 @@ class ChoicesPage extends StatelessWidget {
                   );
                 },
                 child: Container(
-                  width: 150,
-                  height: 170,
+                  width: 200, // Increased card width
+                  height: 200, // Increased card height
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(15), // Decreased corner rounding
                     color: Colors.pink, // First card color changed to pink
                     border: Border.all(
                       color: Colors.amber,
@@ -125,7 +122,7 @@ class ChoicesPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       const CircleAvatar(
-                        radius: 38,
+                        radius: 50, // Increased avatar size
                         backgroundImage: NetworkImage(
                             'https://media.licdn.com/dms/image/C4E03AQGO448nAOrvfw/profile-displayphoto-shrink_400_400/0/1516929476300?e=2147483647&v=beta&t=i9xTbCh2nx3upQEx53PPtGP28Da2T7i_AJOTsqQRliE'),
                       ),
@@ -135,7 +132,7 @@ class ChoicesPage extends StatelessWidget {
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                          fontSize: 18, // Increased font size
                         ),
                       ),
                     ],
@@ -154,10 +151,10 @@ class ChoicesPage extends StatelessWidget {
                   );
                 },
                 child: Container(
-                  width: 150,
-                  height: 170,
+                  width: 200, // Increased card width
+                  height: 200, // Increased card height
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(15), // Decreased corner rounding
                     color: Colors.pink, // Second card color changed to pink
                     border: Border.all(
                       color: Colors.amber,
@@ -168,7 +165,7 @@ class ChoicesPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       const CircleAvatar(
-                        radius: 38,
+                        radius: 50, // Increased avatar size
                         backgroundImage: NetworkImage(
                             'https://media.licdn.com/dms/image/C4E03AQGO448nAOrvfw/profile-displayphoto-shrink_400_400/0/1516929476300?e=2147483647&v=beta&t=i9xTbCh2nx3upQEx53PPtGP28Da2T7i_AJOTsqQRliE'),
                       ),
@@ -178,7 +175,7 @@ class ChoicesPage extends StatelessWidget {
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                          fontSize: 18, // Increased font size
                         ),
                       ),
                     ],
@@ -192,6 +189,7 @@ class ChoicesPage extends StatelessWidget {
     );
   }
 }
+
 
 class UsersPage extends StatelessWidget {
   @override
