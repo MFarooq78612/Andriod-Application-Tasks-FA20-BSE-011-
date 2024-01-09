@@ -5,8 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+import 'firebase_options.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MyApp());
 }
 
@@ -111,7 +118,8 @@ class ChoicesPage extends StatelessWidget {
                   width: 200, // Increased card width
                   height: 200, // Increased card height
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15), // Decreased corner rounding
+                    borderRadius:
+                        BorderRadius.circular(15), // Decreased corner rounding
                     color: Colors.pink, // First card color changed to pink
                     border: Border.all(
                       color: Colors.amber,
@@ -154,7 +162,8 @@ class ChoicesPage extends StatelessWidget {
                   width: 200, // Increased card width
                   height: 200, // Increased card height
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15), // Decreased corner rounding
+                    borderRadius:
+                        BorderRadius.circular(15), // Decreased corner rounding
                     color: Colors.pink, // Second card color changed to pink
                     border: Border.all(
                       color: Colors.amber,
@@ -190,7 +199,6 @@ class ChoicesPage extends StatelessWidget {
   }
 }
 
-
 class UsersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -217,7 +225,8 @@ class UsersPage extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => AccessWithoutAccountPage(), // Replace with your desired page for "Access Without Account"
+                      builder: (context) =>
+                          AccessWithoutAccountPage(), // Replace with your desired page for "Access Without Account"
                     ),
                   );
                 },
@@ -237,7 +246,8 @@ class UsersPage extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => AccessWithAccountPage(), // Replace with your desired page for "Access With Account"
+                      builder: (context) =>
+                          AccessWithAccountPage(), // Replace with your desired page for "Access With Account"
                     ),
                   );
                 },
@@ -259,10 +269,10 @@ class UsersPage extends StatelessWidget {
   }
 }
 
-
 class AccessWithoutAccountPage extends StatefulWidget {
   @override
-  _AccessWithoutAccountPageState createState() => _AccessWithoutAccountPageState();
+  _AccessWithoutAccountPageState createState() =>
+      _AccessWithoutAccountPageState();
 }
 
 class _AccessWithoutAccountPageState extends State<AccessWithoutAccountPage> {
@@ -312,7 +322,8 @@ class _AccessWithoutAccountPageState extends State<AccessWithoutAccountPage> {
         centerTitle: true,
         actions: [
           PopupMenuButton<String>(
-            icon: Icon(Icons.more_vert, color: Colors.white), // Dropdown icon color
+            icon: Icon(Icons.more_vert,
+                color: Colors.white), // Dropdown icon color
             color: Colors.pink,
             onSelected: (String value) {
               setState(() {
@@ -431,7 +442,6 @@ class _AccessWithoutAccountPageState extends State<AccessWithoutAccountPage> {
   }
 }
 
-
 class AccessWithAccountPage extends StatefulWidget {
   @override
   _AccessWithAccountPageState createState() => _AccessWithAccountPageState();
@@ -464,8 +474,10 @@ class _AccessWithAccountPageState extends State<AccessWithAccountPage> {
 
   void updateBorderColor() {
     setState(() {
-      isUsernameFocused = _usernameFocus.hasFocus || _usernameController.text.isNotEmpty;
-      isPasswordFocused = _passwordFocus.hasFocus || _passwordController.text.isNotEmpty;
+      isUsernameFocused =
+          _usernameFocus.hasFocus || _usernameController.text.isNotEmpty;
+      isPasswordFocused =
+          _passwordFocus.hasFocus || _passwordController.text.isNotEmpty;
     });
   }
 
@@ -488,7 +500,8 @@ class _AccessWithAccountPageState extends State<AccessWithAccountPage> {
               TextFormField(
                 controller: _usernameController,
                 focusNode: _usernameFocus,
-                style: TextStyle(color: isUsernameFocused ? Colors.white : Colors.pink),
+                style: TextStyle(
+                    color: isUsernameFocused ? Colors.white : Colors.pink),
                 decoration: InputDecoration(
                   labelText: 'Username or Email',
                   labelStyle: TextStyle(color: Colors.white),
@@ -507,7 +520,8 @@ class _AccessWithAccountPageState extends State<AccessWithAccountPage> {
                 controller: _passwordController,
                 focusNode: _passwordFocus,
                 obscureText: true,
-                style: TextStyle(color: isPasswordFocused ? Colors.white : Colors.pink),
+                style: TextStyle(
+                    color: isPasswordFocused ? Colors.white : Colors.pink),
                 decoration: InputDecoration(
                   labelText: 'Password',
                   labelStyle: TextStyle(color: Colors.white),
@@ -556,8 +570,6 @@ class _AccessWithAccountPageState extends State<AccessWithAccountPage> {
   }
 }
 
-
-
 class UserMainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -578,13 +590,17 @@ class UserMainPage extends StatelessWidget {
                 CardButton(
                   buttonText: 'Track Real-time Price',
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => CoinMarketPage()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CoinMarketPage()));
                   },
                 ),
                 CardButton(
                   buttonText: 'Access News by Admin',
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => PostPage()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => PostPage()));
                   },
                 ),
               ]),
@@ -593,13 +609,17 @@ class UserMainPage extends StatelessWidget {
                 CardButton(
                   buttonText: 'View Video in App',
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => PostPage()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => PostPage()));
                   },
                 ),
                 CardButton(
                   buttonText: 'Download Admin File',
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => ShareFilePage()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ShareFilePage()));
                   },
                 ),
               ]),
@@ -608,13 +628,17 @@ class UserMainPage extends StatelessWidget {
                 CardButton(
                   buttonText: 'Share Shared Picture',
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => ShareFilePage()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ShareFilePage()));
                   },
                 ),
                 CardButton(
                   buttonText: 'Like the Admin Post',
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => PostPage()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => PostPage()));
                   },
                 ),
               ]),
@@ -623,13 +647,15 @@ class UserMainPage extends StatelessWidget {
                 CardButton(
                   buttonText: 'Dislike the Admin Post',
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => PostPage()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => PostPage()));
                   },
                 ),
                 CardButton(
                   buttonText: 'Give Feedback',
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => PostPage()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => PostPage()));
                   },
                 ),
               ]),
@@ -671,7 +697,8 @@ class CardButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(15.0),
         child: Container(
           height: 150, // Adjust the height of the cards
-          width: MediaQuery.of(context).size.width * 0.3, // Adjust the width of the cards
+          width: MediaQuery.of(context).size.width *
+              0.3, // Adjust the width of the cards
           padding: EdgeInsets.all(16),
           child: Center(
             child: Text(
@@ -727,9 +754,11 @@ class _SignupPageState extends State<SignupPage> {
 
   void updateBorderColor() {
     setState(() {
-      isUsernameFocused = _usernameFocus.hasFocus || _usernameController.text.isNotEmpty;
+      isUsernameFocused =
+          _usernameFocus.hasFocus || _usernameController.text.isNotEmpty;
       isEmailFocused = _emailFocus.hasFocus || _emailController.text.isNotEmpty;
-      isPasswordFocused = _passwordFocus.hasFocus || _passwordController.text.isNotEmpty;
+      isPasswordFocused =
+          _passwordFocus.hasFocus || _passwordController.text.isNotEmpty;
     });
   }
 
@@ -752,7 +781,8 @@ class _SignupPageState extends State<SignupPage> {
               TextFormField(
                 controller: _usernameController,
                 focusNode: _usernameFocus,
-                style: TextStyle(color: isUsernameFocused ? Colors.white : Colors.black),
+                style: TextStyle(
+                    color: isUsernameFocused ? Colors.white : Colors.black),
                 decoration: InputDecoration(
                   labelText: 'Username',
                   labelStyle: TextStyle(color: Colors.white),
@@ -770,7 +800,8 @@ class _SignupPageState extends State<SignupPage> {
               TextFormField(
                 controller: _emailController,
                 focusNode: _emailFocus,
-                style: TextStyle(color: isEmailFocused ? Colors.white : Colors.black),
+                style: TextStyle(
+                    color: isEmailFocused ? Colors.white : Colors.black),
                 decoration: InputDecoration(
                   labelText: 'Email',
                   labelStyle: TextStyle(color: Colors.white),
@@ -789,7 +820,8 @@ class _SignupPageState extends State<SignupPage> {
                 controller: _passwordController,
                 focusNode: _passwordFocus,
                 obscureText: true,
-                style: TextStyle(color: isPasswordFocused ? Colors.white : Colors.black),
+                style: TextStyle(
+                    color: isPasswordFocused ? Colors.white : Colors.black),
                 decoration: InputDecoration(
                   labelText: 'Password',
                   labelStyle: TextStyle(color: Colors.white),
@@ -822,7 +854,6 @@ class _SignupPageState extends State<SignupPage> {
   }
 }
 
-
 class TradingAppPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -830,9 +861,7 @@ class TradingAppPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.pink,
         title: const Center(child: Text('Trading App')),
-        actions: [
-
-        ],
+        actions: [],
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -867,37 +896,44 @@ class TradingAppPage extends StatelessWidget {
                           MaterialPageRoute(builder: (context) => PostPage()),
                         );
                       },
-                      child: const CardItem(text: 'Admin Posts', color: Colors.pink),
+                      child: const CardItem(
+                          text: 'Admin Posts', color: Colors.pink),
                     ),
                     GestureDetector(
                       onTap: () {
                         // Navigate to the Admin Voice Message page
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => AdminVoiceMessagePage()),
+                          MaterialPageRoute(
+                              builder: (context) => AdminVoiceMessagePage()),
                         );
                       },
-                      child: const CardItem(text: 'Admin Voice Message', color: Colors.pink),
+                      child: const CardItem(
+                          text: 'Admin Voice Message', color: Colors.pink),
                     ),
                     GestureDetector(
                       onTap: () {
                         // Navigate to the Share file page
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => ShareFilePage()),
+                          MaterialPageRoute(
+                              builder: (context) => ShareFilePage()),
                         );
                       },
-                      child: const CardItem(text: 'Share file', color: Colors.pink),
+                      child: const CardItem(
+                          text: 'Share file', color: Colors.pink),
                     ),
                     GestureDetector(
                       onTap: () {
                         // Navigate to the Coin Market page
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => CoinMarketPage()),
+                          MaterialPageRoute(
+                              builder: (context) => CoinMarketPage()),
                         );
                       },
-                      child: const CardItem(text: 'Coin Market', color: Colors.pink),
+                      child: const CardItem(
+                          text: 'Coin Market', color: Colors.pink),
                     ),
                     // Add more GestureDetector widgets for other pages...
                   ],
@@ -911,6 +947,7 @@ class TradingAppPage extends StatelessWidget {
     );
   }
 }
+
 class CardItem extends StatelessWidget {
   final String text;
   final Color color;
@@ -933,7 +970,6 @@ class CardItem extends StatelessWidget {
     );
   }
 }
-
 
 class AdminVoiceMessagePage extends StatefulWidget {
   @override
@@ -1035,7 +1071,9 @@ class _AdminVoiceMessagePageState extends State<AdminVoiceMessagePage> {
                 ElevatedButton(
                   onPressed: _startRecording,
                   child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 16, horizontal: 32), // Adjust padding for larger button
+                    padding: EdgeInsets.symmetric(
+                        vertical: 16,
+                        horizontal: 32), // Adjust padding for larger button
                     child: Text(
                       'Start Recording',
                       style: TextStyle(fontSize: 18),
@@ -1049,14 +1087,17 @@ class _AdminVoiceMessagePageState extends State<AdminVoiceMessagePage> {
                 ElevatedButton(
                   onPressed: _stopRecording,
                   child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 16, horizontal: 32), // Adjust padding for larger button
+                    padding: EdgeInsets.symmetric(
+                        vertical: 16,
+                        horizontal: 32), // Adjust padding for larger button
                     child: Text(
                       'Stop Recording',
                       style: TextStyle(fontSize: 18),
                     ),
                   ),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red, // Use a different color for stop
+                    backgroundColor:
+                        Colors.red, // Use a different color for stop
                   ),
                 ),
             ],
@@ -1066,7 +1107,6 @@ class _AdminVoiceMessagePageState extends State<AdminVoiceMessagePage> {
     );
   }
 }
-
 
 class ShareFilePage extends StatefulWidget {
   @override
@@ -1118,16 +1158,16 @@ class _ShareFilePageState extends State<ShareFilePage> {
             children: [
               _selectedFile != null
                   ? _selectedFile!.path.endsWith('.jpg') ||
-                  _selectedFile!.path.endsWith('.png')
-                  ? Image.file(
-                _selectedFile!,
-                fit: BoxFit.contain,
-                height: 200,
-              )
-                  : Text(
-                'File: ${_selectedFile!.path}',
-                style: TextStyle(color: Colors.white),
-              )
+                          _selectedFile!.path.endsWith('.png')
+                      ? Image.file(
+                          _selectedFile!,
+                          fit: BoxFit.contain,
+                          height: 200,
+                        )
+                      : Text(
+                          'File: ${_selectedFile!.path}',
+                          style: TextStyle(color: Colors.white),
+                        )
                   : Container(),
               const SizedBox(height: 20),
               ElevatedButton(
@@ -1179,7 +1219,8 @@ class _CoinMarketPageState extends State<CoinMarketPage> {
   double dollarRate = 0.0;
 
   Future<void> fetchData(String country) async {
-    final apiKey = '256|HBKPTF8avF0UN24iHgQ1ZfcvcnH36MxoQOH8J1OA'; // Replace with your actual API key
+    final apiKey =
+        '256|HBKPTF8avF0UN24iHgQ1ZfcvcnH36MxoQOH8J1OA'; // Replace with your actual API key
     final baseUrl = 'https://v6.exchangeratesapi.io/latest';
 
     final apiUrl = '$baseUrl?base=USD&symbols=$country&access_key=$apiKey';
@@ -1265,6 +1306,7 @@ class _CoinMarketPageState extends State<CoinMarketPage> {
     );
   }
 }
+
 class PostPage extends StatefulWidget {
   @override
   _PostPageState createState() => _PostPageState();
@@ -1299,15 +1341,27 @@ class _PostPageState extends State<PostPage> {
                 items: [
                   DropdownMenuItem<String>(
                     value: 'image',
-                    child: Text('Image', style: TextStyle(color: selectedOption == 'image' ? Colors.white : Colors.black)),
+                    child: Text('Image',
+                        style: TextStyle(
+                            color: selectedOption == 'image'
+                                ? Colors.white
+                                : Colors.black)),
                   ),
                   DropdownMenuItem<String>(
                     value: 'video_url',
-                    child: Text('Video URL', style: TextStyle(color: selectedOption == 'video_url' ? Colors.white : Colors.black)),
+                    child: Text('Video URL',
+                        style: TextStyle(
+                            color: selectedOption == 'video_url'
+                                ? Colors.white
+                                : Colors.black)),
                   ),
                   DropdownMenuItem<String>(
                     value: 'web_view',
-                    child: Text('WebView', style: TextStyle(color: selectedOption == 'web_view' ? Colors.white : Colors.black)),
+                    child: Text('WebView',
+                        style: TextStyle(
+                            color: selectedOption == 'web_view'
+                                ? Colors.white
+                                : Colors.black)),
                   ),
                 ],
                 onChanged: (String? value) {
@@ -1316,7 +1370,8 @@ class _PostPageState extends State<PostPage> {
                   });
                 },
                 value: selectedOption,
-                hint: const Text('Select Post Type:', style: TextStyle(color: Colors.white)),
+                hint: const Text('Select Post Type:',
+                    style: TextStyle(color: Colors.white)),
                 underline: Container(),
               ),
             ),
@@ -1341,7 +1396,8 @@ class _PostPageState extends State<PostPage> {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    if (selectedOption != null && urlController.text.isNotEmpty) {
+                    if (selectedOption != null &&
+                        urlController.text.isNotEmpty) {
                       launchURL(urlController.text);
                     }
                   },
