@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "737316834637",
+    "project_id": "crypto-trading-app-de333",
+    "storage_bucket": "crypto-trading-app-de333.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:737316834637:android:1dd21f2992b88aa933fb04",
+        "android_client_info": {
+          "package_name": "com.example.my_trading_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtgToNx6FOP0WX03ibDeTB6VT7H052lb0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
