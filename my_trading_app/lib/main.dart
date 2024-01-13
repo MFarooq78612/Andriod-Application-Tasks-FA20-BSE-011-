@@ -97,7 +97,6 @@ class ChoicesPage extends StatelessWidget {
           },
         ),
         title: const Center(child: Text('Trading App')),
-        actions: [],
       ),
       body: Container(
         color: Colors.black87, // Background color set to black87
@@ -116,10 +115,11 @@ class ChoicesPage extends StatelessWidget {
                   );
                 },
                 child: Container(
-                  width: 150,
-                  height: 170,
+                  width: 200, // Increased card width
+                  height: 200, // Increased card height
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius:
+                        BorderRadius.circular(15), // Decreased corner rounding
                     color: Colors.pink, // First card color changed to pink
                     border: Border.all(
                       color: Colors.amber,
@@ -130,7 +130,7 @@ class ChoicesPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       const CircleAvatar(
-                        radius: 38,
+                        radius: 50, // Increased avatar size
                         backgroundImage: NetworkImage(
                             'https://media.licdn.com/dms/image/C4E03AQGO448nAOrvfw/profile-displayphoto-shrink_400_400/0/1516929476300?e=2147483647&v=beta&t=i9xTbCh2nx3upQEx53PPtGP28Da2T7i_AJOTsqQRliE'),
                       ),
@@ -140,7 +140,7 @@ class ChoicesPage extends StatelessWidget {
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                          fontSize: 18, // Increased font size
                         ),
                       ),
                     ],
@@ -154,15 +154,16 @@ class ChoicesPage extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => UsersPage(),
+                      builder: (context) => UserMainPage(),
                     ),
                   );
                 },
                 child: Container(
-                  width: 150,
-                  height: 170,
+                  width: 200, // Increased card width
+                  height: 200, // Increased card height
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius:
+                        BorderRadius.circular(15), // Decreased corner rounding
                     color: Colors.pink, // Second card color changed to pink
                     border: Border.all(
                       color: Colors.amber,
@@ -173,7 +174,7 @@ class ChoicesPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       const CircleAvatar(
-                        radius: 38,
+                        radius: 50, // Increased avatar size
                         backgroundImage: NetworkImage(
                             'https://media.licdn.com/dms/image/C4E03AQGO448nAOrvfw/profile-displayphoto-shrink_400_400/0/1516929476300?e=2147483647&v=beta&t=i9xTbCh2nx3upQEx53PPtGP28Da2T7i_AJOTsqQRliE'),
                       ),
@@ -183,382 +184,11 @@ class ChoicesPage extends StatelessWidget {
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                          fontSize: 18, // Increased font size
                         ),
                       ),
                     ],
                   ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class UsersPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.pink, // Navbar color set to pink
-        title: Text('User Details'), // Title of the page
-        centerTitle: true,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-      ),
-      body: Container(
-        color: Colors.black87, // Background color set to black87
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          AccessWithoutAccountPage(), // Replace with your desired page for "Access Without Account"
-                    ),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.pink, // Button color set to pink
-                ),
-                child: Text(
-                  'Access Without Account',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-              SizedBox(height: 30),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          AccessWithAccountPage(), // Replace with your desired page for "Access With Account"
-                    ),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.pink, // Button color set to pink
-                ),
-                child: Text(
-                  'Access With Account',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class AccessWithoutAccountPage extends StatefulWidget {
-  @override
-  _AccessWithoutAccountPageState createState() =>
-      _AccessWithoutAccountPageState();
-}
-
-class _AccessWithoutAccountPageState extends State<AccessWithoutAccountPage> {
-  TextEditingController buyController = TextEditingController();
-  TextEditingController sellController = TextEditingController();
-  TextEditingController feesController = TextEditingController();
-  double profit = 0.0;
-
-  String selectedMenuItem = '';
-
-  void calculateProfit() {
-    double buyingPrice = double.tryParse(buyController.text) ?? 0.0;
-    double sellingPrice = double.tryParse(sellController.text) ?? 0.0;
-    double fees = double.tryParse(feesController.text) ?? 0.0;
-
-    setState(() {
-      profit = ((sellingPrice - buyingPrice) - fees);
-      selectedMenuItem = 'Profit: \$ $profit';
-    });
-  }
-
-  void displayCurrentPrice() {
-    setState(() {
-      selectedMenuItem = 'Current Price: \$12000';
-    });
-  }
-
-  void showAvailableMarkets() {
-    String marketURL = 'https://accounts.binance.com';
-    launchURL(marketURL);
-  }
-
-  launchURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.pink,
-        title: Text('Access Without Account'),
-        centerTitle: true,
-        actions: [
-          PopupMenuButton<String>(
-            icon: Icon(Icons.more_vert,
-                color: Colors.white), // Dropdown icon color
-            color: Colors.pink,
-            onSelected: (String value) {
-              setState(() {
-                selectedMenuItem = '';
-              });
-              if (value == 'currentPrice') {
-                displayCurrentPrice();
-              } else if (value == 'availableMarkets') {
-                showAvailableMarkets();
-              }
-            },
-            itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-              PopupMenuItem<String>(
-                value: 'currentPrice',
-                child: Text(
-                  'Display Current Price of the Coin',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-              PopupMenuItem<String>(
-                value: 'availableMarkets',
-                child: Text(
-                  'Available Markets',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          color: Colors.black87,
-          padding: EdgeInsets.all(100),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(height: 20),
-              Text(
-                'Profits of Investment',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 20),
-              TextFormField(
-                controller: buyController,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  labelText: 'Buying Price',
-                  labelStyle: TextStyle(color: Colors.white),
-                  border: OutlineInputBorder(),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.pink),
-                  ),
-                ),
-                style: TextStyle(color: Colors.white),
-              ),
-              SizedBox(height: 20),
-              TextFormField(
-                controller: sellController,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  labelText: 'Selling Price',
-                  labelStyle: TextStyle(color: Colors.white),
-                  border: OutlineInputBorder(),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.pink),
-                  ),
-                ),
-                style: TextStyle(color: Colors.white),
-              ),
-              SizedBox(height: 20),
-              TextFormField(
-                controller: feesController,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  labelText: 'Investment Fees',
-                  labelStyle: TextStyle(color: Colors.white),
-                  border: OutlineInputBorder(),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.pink),
-                  ),
-                ),
-                style: TextStyle(color: Colors.white),
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  calculateProfit();
-                },
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.pink,
-                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                ),
-                child: Text('Calculate Profit', style: TextStyle(fontSize: 18)),
-              ),
-              SizedBox(height: 20),
-              Text(
-                selectedMenuItem,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 100),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class AccessWithAccountPage extends StatefulWidget {
-  @override
-  _AccessWithAccountPageState createState() => _AccessWithAccountPageState();
-}
-
-class _AccessWithAccountPageState extends State<AccessWithAccountPage> {
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final FocusNode _usernameFocus = FocusNode();
-  final FocusNode _passwordFocus = FocusNode();
-
-  bool isUsernameFocused = false;
-  bool isPasswordFocused = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _usernameController.addListener(updateBorderColor);
-    _passwordController.addListener(updateBorderColor);
-  }
-
-  @override
-  void dispose() {
-    _usernameController.dispose();
-    _passwordController.dispose();
-    _usernameFocus.dispose();
-    _passwordFocus.dispose();
-    super.dispose();
-  }
-
-  void updateBorderColor() {
-    setState(() {
-      isUsernameFocused =
-          _usernameFocus.hasFocus || _usernameController.text.isNotEmpty;
-      isPasswordFocused =
-          _passwordFocus.hasFocus || _passwordController.text.isNotEmpty;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.pink,
-        title: Text('Login'),
-        centerTitle: true,
-      ),
-      body: Container(
-        color: Colors.black87,
-        child: Padding(
-          padding: EdgeInsets.all(20.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              TextFormField(
-                controller: _usernameController,
-                focusNode: _usernameFocus,
-                style: TextStyle(
-                    color: isUsernameFocused ? Colors.white : Colors.pink),
-                decoration: InputDecoration(
-                  labelText: 'Username or Email',
-                  labelStyle: TextStyle(color: Colors.white),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.pink),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: isUsernameFocused ? Colors.pink : Colors.black,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height: 20),
-              TextFormField(
-                controller: _passwordController,
-                focusNode: _passwordFocus,
-                obscureText: true,
-                style: TextStyle(
-                    color: isPasswordFocused ? Colors.white : Colors.pink),
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                  labelStyle: TextStyle(color: Colors.white),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.pink),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: isPasswordFocused ? Colors.pink : Colors.black,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => UserMainPage()),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.pink,
-                  padding: EdgeInsets.symmetric(vertical: 16),
-                ),
-                child: Text('Login', style: TextStyle(fontSize: 18)),
-              ),
-              SizedBox(height: 10),
-              TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SignupPage()),
-                  );
-                },
-                child: Text(
-                  'Don\'t have an account? Sign up',
-                  style: TextStyle(color: Colors.white),
                 ),
               ),
             ],
